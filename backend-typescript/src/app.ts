@@ -5,12 +5,14 @@ import { ConexionDB } from "./db/db";
 import { MONGO_URI } from "./env/env";
 import { PORT } from "./env/env";
 import {taskRouter} from "./router/task.router";
+import { userRouter } from "./router/user.router";
 const app = express();
 
 app.use(express.json())
 app.use(cors())
 app.use(morgan("dev"))
 app.use("/api", taskRouter);
+app.use("/api",userRouter);
 
 
 
