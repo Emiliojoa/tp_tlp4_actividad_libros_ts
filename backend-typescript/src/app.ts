@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { ConexionDB } from "./db/db";
-import { MONGO_URI } from "./env/env";
 import { PORT } from "./env/env";
 import {taskRouter} from "./router/task.router";
 import { userRouter } from "./router/user.router";

@@ -14,7 +14,7 @@ export default function Tasks() {
   const { register, handleSubmit, reset } = useForm<Task>();
 
   const fetchTasks = async () => {
-    const res = await fetch("http://localhost:4000/api/tasks");
+    const res = await fetch("/api/tasks");
     const data = await res.json();
     setTasks(data);
   };
@@ -25,8 +25,8 @@ export default function Tasks() {
 
   const onSubmit = async (data: Task) => {
     const url = editingTask
-      ? `http://localhost:4000/api/tasks/${editingTask._id}`
-      : "http://localhost:4000/api/tasks";
+      ? `/api/tasks/${editingTask._id}`
+      : "/api/tasks";
     const method = editingTask ? "PUT" : "POST";
 
     await fetch(url, {
@@ -47,7 +47,7 @@ export default function Tasks() {
 
   const handleDelete = async (id?: string) => {
     if (!id) return;
-    await fetch(`http://localhost:4000/api/tasks/${id}`, { method: "DELETE" });
+    await fetch(`/api/tasks/${id}`, { method: "DELETE" });
     fetchTasks();
   };
 

@@ -3,13 +3,15 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom'
 
 type FormValues = {
+  nombre: string
+  edad: number
   email: string
   password: string
 }
 
 export default function Register() {
   const { register, handleSubmit, formState } = useForm<FormValues>({
-    defaultValues: { email: '', password: '' }
+    defaultValues: { nombre: '', edad: 18, email: '', password: '' }
   })
   const { errors, isSubmitting } = formState
   const navigate = useNavigate()
@@ -18,7 +20,7 @@ export default function Register() {
   const onSubmit = async (data: FormValues) => {
     setServerError(null)
     try {
-      const res = await fetch('http://localhost:4000/auth/register', {
+      const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -47,9 +49,40 @@ export default function Register() {
       <h2>Registrarte</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div style={{ marginBottom: 12 }}>
+          <label style={{ display: 'block', marginBottom: 6 }}>Nombre</label>
+          <input
+            {...register('nombre', { required: 'El nombre es obligatorio' })}
+            type="text"
+            style={{ width: '100%', padding: 8 }}
+          />
+          {errors.nombre && (
+            <small style={{ color: 'red' }}>{errors.nombre.message}</small>
+          )}
+        </div>
+
+        <div style={{ marginBottom: 12 }}>
+          <label style={{ display: 'block', marginBottom: 6 }}>Edad</label>
+          <input
+            {...register('edad', {
+              required: 'La edad es obligatoria',
+              valueAsNumber: true,
+              min: { value: 0, message: 'Edad inválida' }
+            })}
+            type="number"
+            style={{ width: '100%', padding: 8 }}
+          />
+          {errors.edad && (
+            <small style={{ color: 'red' }}>{errors.edad.message}</small>
+          )}
+        </div>
+
+        <div style={{ marginBottom: 12 }}>
           <label style={{ display: 'block', marginBottom: 6 }}>Email</label>
           <input
-            {...register('email', { required: 'El email es obligatorio' })}
+            {...register('email', {
+              required: 'El email es obligatorio',
+              pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email inválido' }
+            })}
             type="email"
             style={{ width: '100%', padding: 8 }}
           />
@@ -61,7 +94,7 @@ export default function Register() {
         <div style={{ marginBottom: 12 }}>
           <label style={{ display: 'block', marginBottom: 6 }}>Contraseña</label>
           <input
-            {...register('password', { required: 'La contraseña es obligatoria' })}
+            {...register('password', { required: 'La contraseña es obligatoria', minLength: { value: 6, message: 'La contraseña debe tener al menos 6 caracteres' } })}
             type="password"
             style={{ width: '100%', padding: 8 }}
           />
