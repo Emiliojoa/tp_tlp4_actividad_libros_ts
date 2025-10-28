@@ -55,10 +55,9 @@ export default function Tasks() {
     <div className="min-h-screen bg-gray-50 py-10 px-4 bg-red-">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-8">
-          📝 Gestor de Tareas
+          Tus tareas
         </h1>
 
-        {/* Formulario */}
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-white shadow-lg flex flex-col rounded-2xl p-6 mb-8 border border-gray-200"
@@ -97,7 +96,6 @@ export default function Tasks() {
           </button>
         </form>
 
-        {/* Lista de tareas */}
         <ul className="space-y-4">
           {tasks.length > 0 ? (
             tasks.map((task) => (
