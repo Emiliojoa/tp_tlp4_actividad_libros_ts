@@ -137,7 +137,7 @@ export default function Tasks() {
             ))
           ) : (
             <p className="text-center text-gray-500">
-              No hay tareas disponibles 😴
+              No hay tareas disponibles 
             </p>
           )}
         </ul>
